@@ -1,0 +1,39 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Helper function to check if the user is signed in
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    // Helper to check if a user is accessing their own data
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    // Users collection and addresses subcollection
+    match /users/{userId} {
+      allow read, write: if isOwner(userId);
+      
+      match /addresses/{addressId} {
+        allow read, write: if isOwner(userId);
+      }
+    }
+
+    // Products collection (anyone can read, writes denied from client)
+    match /products/{productId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    // Orders collection (authenticated users can create and read their own orders)
+    match /orders/{orderId} {
+      allow create: if isSignedIn() && request.resource.data.userId == request.auth.uid;
+      allow read: if isSignedIn() && (
+        resource == null || resource.data.userId == request.auth.uid
+      );
+      allow update, delete: if false; // Restrict order modifications to server admin panel
+    }
+  }
+}
