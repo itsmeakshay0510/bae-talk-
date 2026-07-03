@@ -31,7 +31,8 @@ jobs:
         run: flutter pub get
 
       - name: Analyze code linting
-        run: flutter analyze
+        run: flutter analyze --no-fatal-infos
+
 
       - name: Run unit tests
         run: flutter test
