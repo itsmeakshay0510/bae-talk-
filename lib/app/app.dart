@@ -27,7 +27,9 @@ final routerProvider = Provider<GoRouter>((ref) {
     navigatorKey: _rootNavigatorKey,
     initialLocation: '/splash',
     redirect: (context, state) {
-      final isLoggedIn = AppRuntime.isDemoMode || authState.asData?.value != null;
+      final isLoggedIn = AppRuntime.isDemoMode
+          ? ref.watch(demoLoggedInProvider)
+          : authState.asData?.value != null;
       final isAuthRoute = state.matchedLocation == '/login' ||
           state.matchedLocation == '/signup' ||
           state.matchedLocation == '/onboarding' ||

@@ -4,6 +4,8 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../../shared/runtime/app_runtime.dart';
 
+final demoLoggedInProvider = StateProvider<bool>((ref) => false);
+
 final authStateProvider = StreamProvider<User?>((ref) {
   if (AppRuntime.isDemoMode) return Stream<User?>.value(null);
   return FirebaseAuth.instance.authStateChanges();

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'firebase_options.dart';
 import 'app/app.dart';
@@ -17,6 +18,8 @@ void main() async {
     try {
       await Firebase.initializeApp(options: firebaseOptions);
       AppRuntime.firebaseReady = true;
+      // Capture uncaught flutter errors
+      FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
     } catch (_) {
       AppRuntime.firebaseReady = false;
     }

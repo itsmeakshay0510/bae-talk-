@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../../constants/app_colors.dart';
 import '../../../constants/app_text_styles.dart';
 import '../providers/auth_provider.dart';
+import '../../../shared/runtime/app_runtime.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
@@ -32,10 +33,15 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     if (!_formKey.currentState!.validate()) return;
     setState(() { _isLoading = true; _error = null; });
     try {
-      await ref.read(authRepositoryProvider).signInWithEmail(
-        email: _emailCtrl.text.trim(),
-        password: _passCtrl.text,
-      );
+      if (AppRuntime.isDemoMode) {
+        await Future.delayed(const Duration(milliseconds: 800));
+        ref.read(demoLoggedInProvider.notifier).state = true;
+      } else {
+        await ref.read(authRepositoryProvider).signInWithEmail(
+          email: _emailCtrl.text.trim(),
+          password: _passCtrl.text,
+        );
+      }
       if (mounted) context.go('/home');
     } catch (e) {
       setState(() => _error = _parseError(e.toString()));
@@ -47,7 +53,12 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   Future<void> _googleLogin() async {
     setState(() { _isLoading = true; _error = null; });
     try {
-      await ref.read(authRepositoryProvider).signInWithGoogle();
+      if (AppRuntime.isDemoMode) {
+        await Future.delayed(const Duration(milliseconds: 800));
+        ref.read(demoLoggedInProvider.notifier).state = true;
+      } else {
+        await ref.read(authRepositoryProvider).signInWithGoogle();
+      }
       if (mounted) context.go('/home');
     } catch (e) {
       setState(() => _error = _parseError(e.toString()));

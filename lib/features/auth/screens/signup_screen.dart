@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../../constants/app_colors.dart';
 import '../../../constants/app_text_styles.dart';
 import '../providers/auth_provider.dart';
+import '../../../shared/runtime/app_runtime.dart';
 
 class SignupScreen extends ConsumerStatefulWidget {
   const SignupScreen({super.key});
@@ -38,12 +39,17 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
     if (!_formKey.currentState!.validate()) return;
     setState(() { _isLoading = true; _error = null; });
     try {
-      await ref.read(authRepositoryProvider).signUpWithEmail(
-        email: _emailCtrl.text.trim(),
-        password: _passCtrl.text,
-        fullName: _nameCtrl.text.trim(),
-        phone: _phoneCtrl.text.trim(),
-      );
+      if (AppRuntime.isDemoMode) {
+        await Future.delayed(const Duration(milliseconds: 800));
+        ref.read(demoLoggedInProvider.notifier).state = true;
+      } else {
+        await ref.read(authRepositoryProvider).signUpWithEmail(
+          email: _emailCtrl.text.trim(),
+          password: _passCtrl.text,
+          fullName: _nameCtrl.text.trim(),
+          phone: _phoneCtrl.text.trim(),
+        );
+      }
       if (mounted) context.go('/home');
     } catch (e) {
       setState(() => _error = e.toString().contains('email-already-in-use')

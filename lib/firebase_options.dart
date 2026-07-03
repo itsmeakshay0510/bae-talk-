@@ -25,26 +25,26 @@ class DefaultFirebaseOptions {
     apiKey: 'REPLACE_WITH_FIREBASE_API_KEY',
     appId: 'REPLACE_WITH_FIREBASE_APP_ID',
     messagingSenderId: 'REPLACE_WITH_FIREBASE_MESSAGING_SENDER_ID',
-    projectId: 'REPLACE_WITH_FIREBASE_PROJECT_ID',
-    authDomain: 'REPLACE_WITH_FIREBASE_PROJECT_ID.firebaseapp.com',
-    storageBucket: 'REPLACE_WITH_FIREBASE_PROJECT_ID.appspot.com',
+    projectId: 'bae-talk-fashion',
+    authDomain: 'bae-talk-fashion.firebaseapp.com',
+    storageBucket: 'bae-talk-fashion.appspot.com',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'REPLACE_WITH_FIREBASE_API_KEY',
     appId: 'REPLACE_WITH_FIREBASE_ANDROID_APP_ID',
     messagingSenderId: 'REPLACE_WITH_FIREBASE_MESSAGING_SENDER_ID',
-    projectId: 'REPLACE_WITH_FIREBASE_PROJECT_ID',
-    storageBucket: 'REPLACE_WITH_FIREBASE_PROJECT_ID.appspot.com',
+    projectId: 'bae-talk-fashion',
+    storageBucket: 'bae-talk-fashion.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'REPLACE_WITH_FIREBASE_API_KEY',
     appId: 'REPLACE_WITH_FIREBASE_IOS_APP_ID',
     messagingSenderId: 'REPLACE_WITH_FIREBASE_MESSAGING_SENDER_ID',
-    projectId: 'REPLACE_WITH_FIREBASE_PROJECT_ID',
-    storageBucket: 'REPLACE_WITH_FIREBASE_PROJECT_ID.appspot.com',
-    iosBundleId: 'com.example.baeTalk',
+    projectId: 'bae-talk-fashion',
+    storageBucket: 'bae-talk-fashion.appspot.com',
+    iosBundleId: 'com.itsmeakshay0510.baeTalk',
   );
 
   static const FirebaseOptions macos = ios;
@@ -53,8 +53,8 @@ class DefaultFirebaseOptions {
     apiKey: 'REPLACE_WITH_FIREBASE_API_KEY',
     appId: 'REPLACE_WITH_FIREBASE_WINDOWS_APP_ID',
     messagingSenderId: 'REPLACE_WITH_FIREBASE_MESSAGING_SENDER_ID',
-    projectId: 'REPLACE_WITH_FIREBASE_PROJECT_ID',
-    authDomain: 'REPLACE_WITH_FIREBASE_PROJECT_ID.firebaseapp.com',
-    storageBucket: 'REPLACE_WITH_FIREBASE_PROJECT_ID.appspot.com',
+    projectId: 'bae-talk-fashion',
+    authDomain: 'bae-talk-fashion.firebaseapp.com',
+    storageBucket: 'bae-talk-fashion.appspot.com',
   );
 }

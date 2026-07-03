@@ -6,6 +6,7 @@ import '../../../constants/app_colors.dart';
 import '../../../constants/app_text_styles.dart';
 import '../../auth/providers/auth_provider.dart';
 import '../../../shared/providers/nav_providers.dart';
+import '../../../shared/runtime/app_runtime.dart';
 
 class ProfileScreen extends ConsumerWidget {
   const ProfileScreen({super.key});
@@ -192,6 +193,12 @@ class ProfileScreen extends ConsumerWidget {
                             onTap: () {},
                             color: AppColors.info,
                           ),
+                          _MenuItem(
+                            icon: Icons.privacy_tip_outlined,
+                            label: 'Privacy Policy',
+                            onTap: () => _showPrivacyPolicy(context),
+                            color: AppColors.success,
+                          ),
                         ],
                       ),
 
@@ -260,10 +267,43 @@ class ProfileScreen extends ConsumerWidget {
             style: ElevatedButton.styleFrom(backgroundColor: AppColors.error),
             onPressed: () async {
               Navigator.pop(ctx);
-              await ref.read(authRepositoryProvider).signOut();
+              if (AppRuntime.isDemoMode) {
+                ref.read(demoLoggedInProvider.notifier).state = false;
+              } else {
+                await ref.read(authRepositoryProvider).signOut();
+              }
               if (context.mounted) context.go('/login');
             },
             child: const Text('Logout', style: TextStyle(color: Colors.white)),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showPrivacyPolicy(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text('Privacy Policy', style: TextStyle(fontFamily: 'Poppins', fontWeight: FontWeight.bold)),
+        content: const SingleChildScrollView(
+          child: Text(
+            'Bae Talk operates the Bae Talk mobile application. This Privacy Policy informs you of our policies regarding the collection, use, and disclosure of personal data when you use our Service.\n\n'
+            '1. Information Collection & Use\n'
+            'We collect details such as email addresses, user names, addresses, and wishlist/cart information to provide and improve our marketplace service. All local cart/wishlist details are saved securely on your device.\n\n'
+            '2. Authentication & Data Sharing\n'
+            'We use secure third-party authentication services (Firebase Auth, Google, Apple) to protect account access. We do not sell or lease your personal data to anyone.\n\n'
+            '3. Security\n'
+            'The security of your data is important to us, and we utilize standard secure channels and encryption to transit user profiles.\n\n'
+            '4. Contact Us\n'
+            'If you have any questions, contact support at privacy@baetalk.in.',
+            style: TextStyle(fontFamily: 'Poppins', fontSize: 13, height: 1.5),
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: const Text('Close', style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold)),
           ),
         ],
       ),
